@@ -1,0 +1,8 @@
+# Dependências
+/node_modules
+
+# Arquivos de ambiente (se você usar)
+.env
+
+# Banco de dados
+*.db
