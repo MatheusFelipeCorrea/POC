@@ -13,7 +13,7 @@ module.exports = {
             // 1. Busca todos os produtos "Pai" da tabela 'products'
             const baseProducts = await connection('products').select('*');
 
-            // 2. Usamos Promise.all para fazer buscas paralelas
+            // 2. Usar o  Promise.all para fazer buscas paralelas
             // Para cada produto "Pai", vamos buscar seus "Filhos" (variantes)
             const productsWithVariants = await Promise.all(
                 baseProducts.map(async (product) => {
