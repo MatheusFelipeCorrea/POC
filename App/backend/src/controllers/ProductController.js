@@ -5,16 +5,12 @@ const connection = require('../database/connection'); // Importa a conexão
 const IMAGE_BASE_URL = 'http://localhost:3001/images/';
 
 module.exports = {
-    /**
-     * Busca todos os produtos "Pai" e aninha suas "Variantes" (Filhos)
-     */
     async index(req, res) {
         try {
             // 1. Busca todos os produtos "Pai" da tabela 'products'
             const baseProducts = await connection('products').select('*');
 
-            // 2. Usar o  Promise.all para fazer buscas paralelas
-            // Para cada produto "Pai", vamos buscar seus "Filhos" (variantes)
+            // 2. Usar o Promise.all para fazer buscas paralelas
             const productsWithVariants = await Promise.all(
                 baseProducts.map(async (product) => {
 
@@ -47,5 +43,43 @@ module.exports = {
             console.error("Erro ao buscar produtos com variantes:", err);
             return res.status(500).json({ message: "Erro interno ao buscar produtos." });
         }
-    }
+    }, // <--- FIM DA FUNÇÃO INDEX (A CHAVE E VÍRGULA QUE FALTAVAM)
+
+    /**
+     * Busca um ÚNICO produto pelo ID e suas variantes
+     */
+    async show(req, res) {
+        try {
+            // 1. Pega o ID da URL (ex: /products/5)
+            const { id } = req.params;
+
+            // 2. Busca o produto "Pai" no banco
+            const product = await connection('products').where('id', id).first();
+
+            if (!product) {
+                return res.status(404).json({ message: "Produto não encontrado." });
+            }
+
+            // 3. Busca as variantes "Filhas" desse produto
+            const rawVariants = await connection('variants')
+                .where('product_id', id)
+                .select('*');
+
+            // 4. Monta as URLs das imagens
+            const variants = rawVariants.map(variant => ({
+                ...variant,
+                image: `${IMAGE_BASE_URL}${variant.image}`
+            }));
+
+            // 5. Retorna o produto completo com suas variantes
+            return res.status(200).json({
+                ...product,
+                variants: variants
+            });
+
+        } catch (err) {
+            console.error("Erro ao buscar produto:", err);
+            return res.status(500).json({ message: "Erro interno." });
+        }
+    } // <--- FIM DA FUNÇÃO SHOW
 };

@@ -27,5 +27,18 @@ export const fetchProducts = async () => {
     }
 };
 
+export const fetchProductById = async (id) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/products/${id}`);
+        if (!response.ok) {
+            throw new Error(`Erro na API! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(`Falha ao buscar produto ${id}:`, error);
+        return null; // Retorna nulo em caso de erro
+    }
+};
 // No futuro, você pode adicionar mais funções aqui:
 // export const addToCart = async (productId) => { ... }

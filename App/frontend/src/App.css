@@ -1,42 +1,976 @@
-#root {
-  max-width: 1280px;
+/*
+
+Este arquivo contém toda a estilização do sistema, seguindo uma
+abordagem de componentização. Ele é dividido nas seguintes seções:
+
+1.  LAYOUT PRINCIPAL:
+    Define a estrutura base do app (App, Header, Footer) e
+    garante o "sticky footer" (rodapé sempre no final).
+
+2.  ESTILOS DE COMPONENTES GERAIS:
+    Estiliza os componentes reutilizáveis que aparecem em
+    várias páginas (Header, Footer, Carousel, Product Card).
+
+3.  ESTILOS DE PÁGINAS ESPECÍFICAS:
+    Define o layout único de cada página principal:
+    - Homepage (Barra de busca, Grids de Produtos)
+    - Página de Detalhes (Layout de 2/3 imagem, 1/3 caixa de compra)
+    - Página do Carrinho (Layout de 2/3 lista, 1/3 sumário "sticky")
+
+4.  ESTILOS DE FEEDBACK (Popups):
+    Contém os estilos para todos os popups de interação:
+    - .notification (Banners de topo: error, success, warning)
+    - .modal-overlay (Modais no centro da tela com botão "OK")
+
+5.  RESPONSIVIDADE (Media Queries):
+    Todo o código de responsividade está agrupado no final
+    do arquivo. A estratégia usada é:
+
+    - @media (max-width: 768px) [TABLETS]:
+      Este é o breakpoint principal. Ele "empilha" (usando
+      flex-direction: column) os layouts que antes eram
+      lado a lado (ex: colunas do Carrinho, Detalhes e Footer).
+      Ele também reorganiza o Header, jogando a busca para baixo.
+
+    - @media (max-width: 640px) [CELULARES]:
+      Este breakpoint faz ajustes finos. O grid de produtos
+      vira uma coluna única (grid-template-columns: 1fr) e
+      os itens *dentro* do carrinho também se empilham
+      verticalmente para melhor legibilidade.
+
+*/
+
+
+
+/* --- 1. Layout Principal --- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1; /* Garante que o conteúdo principal empurre o footer */
+}
+
+
+
+
+/* --- 2. Estilos do Header (Navbar) --- */
+.header {
+  background-color: #00003D; /* Fundo azul escuro (do wireframe) */
+  padding: 12px 40px; /* Padding vertical e horizontal */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100; /* Garante que o header fique acima do carousel */
+  position: relative;
+}
+
+.header-container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.header-icons {
+  display: flex;
+  gap: 20px; /* Espaço entre os ícones */
+}
+
+.header-icon {
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.header-icon:hover {
+  opacity: 0.8;
+}
+
+
+
+/* --- 3. Estilos do Carousel --- */
+.carousel {
+  position: relative; /* Container para os botões e dots */
+  width: 100%;
+  height: 350px; /* Altura fixa para o banner (ajuste se precisar) */
+  overflow: hidden; /* Esconde slides que não estão ativos */
+}
+
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out; /* Animação de slide */
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0; /* Impede que os slides encolham */
+
+
+  background-size: cover;
+  background-position: center;
+}
+
+/* --- Botões de Navegação (Setas) --- */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #00003D;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.carousel-arrow:hover {
+  opacity: 1;
+}
+.arrow-left {
+  left: 20px;
+}
+.arrow-right {
+  right: 20px;
+}
+
+/* --- Indicadores (Dots) --- */
+.carousel-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.dot.active {
+  opacity: 1;
+  background-color: #00003D; /* Ponto ativo */
+}
+
+
+
+
+/* --- 4. Estilos do Conteúdo Principal (Busca e Grid) --- */
+.main-products-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.search-bar-container {
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 700px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 1px solid #d1d1d1;
+  border-radius: 50px;
+  background-color: #f9f9f9;
+}
+.search-bar:focus {
+  outline: none;
+  border-color: #00003D;
+  box-shadow: 0 0 5px rgba(0,0,61,0.3);
+}
+
+.product-section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.section-divider {
+  height: 2px;
+  background-color: #00003D; /* Linha azul escura */
+  width: 100%;
+  margin: 8px 0 24px 0; /* Espaçamento da linha */
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+
+
+/* --- 5. Estilos do Product Card (Visual do Wireframe) --- */
+.product-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Parte 1: Topo Branco com Imagem */
+.product-card__image-container {
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.product-card__image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Parte 2: Base Azul com Conteúdo */
+.product-card__content {
+  background-color: #00003D;
+  color: white;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-card__title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adiciona "..." se o nome for muito longo */
+  margin-bottom: 4px;
+}
+
+.product-card__price {
+  font-size: 1rem;
+  color: #c0c0c0; /* Cinza claro para o preço */
+  margin-bottom: 16px;
+  border-bottom: 1px solid #2a2a5a;
+  padding-bottom: 12px;
+}
+
+.product-card__view-more-btn {
+  background-color: #e0e0e0;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.9rem;
   text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: auto;
+  align-self: flex-end;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.product-card__view-more-btn:hover {
+  background-color: #c9c9c9;
 }
 
-@keyframes logo-spin {
+/* --- 6. Estilos do Footer --- */
+.footer {
+  background-color: #00003D;
+  color: white;
+  padding: 40px 40px;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+/* Coluna 1: Logo */
+.footer-logo-container {
+  flex-basis: 25%;
+}
+
+.footer-logo img {
+  margin-top: 50px;
+  height: 64px;
+  width: auto;
+  display: block;
+}
+
+
+
+.footer-links-column {
+  flex-basis: 20%;
+}
+
+.footer-links-column h4 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.footer-links-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links-column li {
+  margin-bottom: 8px;
+}
+
+.footer-links-column a {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footer-links-column a:hover {
+  color: white;
+}
+
+/* --- 6. Estilos da Página de Detalhes --- */
+
+.details-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Botão Voltar */
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background-color: #00003D;
+  color: white;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.back-button:hover {
+  background-color: #00005a;
+}
+
+/* Layout de Duas Colunas */
+.details-content {
+  display: flex;
+  gap: 30px;
+}
+
+/* Coluna da Esquerda (Imagem/Descrição) */
+.details-left {
+  flex: 2; /
+}
+
+.details-image-container {
+  background-color: #FFF;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.details-image {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.details-description h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+.details-description p,
+.details-description ul {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555;
+}
+.details-description ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+
+/* Coluna da Direita (Caixa de Compra) */
+.details-right {
+  flex: 1;
+}
+
+.buy-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.buy-box__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.buy-box__price {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #E63946;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.buy-box__stock {
+  font-size: 1rem;
+  color: #007F00;
+  font-weight: 600;
+}
+
+.buy-box__divider {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 20px 0;
+}
+
+.buy-box__label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.buy-box__select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 16px;
+}
+
+.buy-box__address {
+  font-size: 0.9rem;
+  color: #555;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+  margin-top: 10px;
+}
+.buy-box__address span {
+  font-weight: 600;
+}
+.buy-box__address p {
+  margin-top: 4px;
+}
+
+.buy-box__add-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  background-color: #00003D;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.buy-box__add-btn:hover {
+  background-color: #00005a;
+}
+
+/* --- 7. Estilos da Página do Carrinho --- */
+
+.cart-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.cart-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #00003D;
+  padding-bottom: 8px;
+}
+
+.cart-layout {
+  display: flex;
+  gap: 30px;
+}
+
+/* Coluna da Esquerda (Lista) */
+.cart-items-list {
+  flex: 2;
+}
+
+.cart-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  background: #fff;
+  position: relative;
+}
+
+.cart-item__image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border: 1px solid #f0f0f0;
+  border-radius: 4px;
+}
+
+.cart-item__details {
+  flex-grow: 1;
+}
+
+.cart-item__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.cart-item__stock {
+  font-size: 0.9rem;
+  color: #007F00;
+  font-weight: 600;
+}
+
+.cart-item__variant {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 4px;
+}
+
+.cart-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+/* Seletor de Quantidade (do wireframe) */
+.cart-item__quantity {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.cart-item__quantity button {
+  background: #f5f5f5;
+  border: none;
+  padding: 0 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.cart-item__quantity input {
+  width: 40px;
+  text-align: center;
+  border: none;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.cart-item__remove-btn {
+  background: none;
+  border: 1px solid #E63946;
+  color: #E63946;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cart-item__remove-btn:hover {
+  background: #E63946;
+  color: white;
+}
+
+.cart-item__price {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.cart-subtotal-bottom {
+  text-align: right;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 16px;
+  border-top: 2px solid #00003D;
+}
+
+/* Coluna da Direita (Sumário) */
+.cart-summary {
+  flex: 1;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.cart-summary__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.cart-summary__price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #E63946;
+  display: block;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 16px;
+}
+
+.cart-summary__address {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+.cart-summary__address span {
+  font-weight: 600;
+}
+.cart-summary__address p {
+  margin-top: 4px;
+}
+
+.cart-summary__checkout-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #00003D;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.cart-summary__checkout-btn:hover {
+  background-color: #00005a;
+}
+
+.cart-summary__continue-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 12px;
+  color: #00003D;
+  font-weight: 600;
+}
+
+/* --- 7. Estilos da Notificação (Popup de Erro) --- */
+.notification {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  /* Aparece entre a busca e os produtos */
+  margin: 24px 0;
+}
+
+/* Estilo para erro (vermelho, do wireframe) */
+.notification--error {
+  background-color: #dc2626;
+  color: white;
+}
+
+/*Estilo para sucesso*/
+.notification--success {
+  background-color: #16a34a;
+  color: white;
+}
+
+.notification__icon {
+  margin-right: 12px;
+}
+
+.notification__text {
+  flex-grow: 1;
+}
+
+/* Estilo de AVISO (Amarelo) */
+.notification--warning {
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  color: #b45309;
+}
+
+.notification--warning .notification__icon {
+  color: #f59e0b;
+}
+
+/* Estilo de SUCESSO (Verde) - Já deixando pronto */
+.notification--success {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.notification--success .notification__icon {
+  color: #22c55e;
+}
+
+/*  MODAL */
+
+
+
+/* O fundo escuro que cobre a tela */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Garante que fique na frente de tudo */
+}
+
+/* O card branco do modal */
+.modal-content {
+  background: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  /* Animação de "fade in" */
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: scale(0.95);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Estilo do ícone */
+.modal-icon {
+  margin-bottom: 1rem;
+}
+
+.modal-icon--warning {
+  color: #f59e0b;
+}
+
+.modal-icon--success {
+  color: #22c55e;
+}
+
+/* Estilo da mensagem */
+.modal-message {
+  font-size: 1.1rem;
+  color: #374151;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Estilo do botão "OK" */
+.modal-button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ffffff;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.modal-button:hover {
+  opacity: 0.85;
+}
+
+.modal-button--warning {
+  background-color: #f59e0b;
+}
+
+.modal-button--success {
+  background-color: #22c55e;
+}
+
+
+
+
+
+/* ----- Responsividade do Sistema ----- */
+
+
+
+/* --- 1. Breakpoint Principal (Tablets e Celulares) --- */
+/* (<= 768px)*/
+@media (max-width: 768px) {
+
+  /* --- Header --- */
+  .header {
+    padding: 15px 20px; /* Reduz o padding lateral */
+  }
+
+  .header-container {
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha */
+    justify-content: space-between; /* Mantém logo e ícones separados */
+    gap: 15px;
+  }
+
+  /* Faz a barra de pesquisa ocupar 100% e ir para baixo */
+  .header-search-form {
+    order: 3; /* Coloca os ícones antes da busca */
+    width: 100%;
+  }
+
+  /* --- Página de Detalhes (Empilhar) --- */
+  .details-content {
+    flex-direction: column; /* Empilha a imagem e a caixa de compra */
+  }
+
+  /* --- Página do Carrinho (Empilhar) --- */
+  .cart-layout {
+    flex-direction: column; /* Empilha a lista de itens e o sumário */
+  }
+
+  .cart-summary {
+    position: static; /* Remove o 'sticky' que não funciona bem no celular */
+    top: auto;
+  }
+
+  /* --- Footer (Empilhar) --- */
+  .footer-container {
+    flex-direction: column; /* Empilha as colunas do footer */
+    text-align: center; /* Centraliza o texto */
+  }
+
+  .footer-logo img {
+    margin: 0 auto 20px auto; /* Centraliza a logo */
   }
 }
 
-.card {
-  padding: 2em;
-}
+/* --- 2. Breakpoint Menor (Celulares) --- */
+/* (<= 640px) Ajustes finos */
+@media (max-width: 640px) {
 
-.read-the-docs {
-  color: #888;
+  /* --- Homepage Grid --- */
+  .product-grid {
+    /* 1 coluna no celular é mais fácil de ler */
+    grid-template-columns: 1fr;
+  }
+
+  /* --- Carousel --- */
+  .carousel {
+    height: 250px; /* Deixa o carrossel mais baixo */
+  }
+
+  /* --- Item do Carrinho --- */
+  .cart-item {
+    flex-direction: column; /* Empilha a imagem e os detalhes */
+    align-items: center; /* Centraliza tudo */
+    text-align: center;
+  }
+
+  .cart-item__price {
+    position: static; /* Tira o preço da posição absoluta */
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: #E63946; /* Adiciona cor para destaque */
+  }
+
+  .cart-item__actions {
+    flex-direction: column; /* Empilha o seletor e o botão de remover */
+    width: 100%;
+    gap: 10px;
+  }
+
+  .cart-item__remove-btn {
+    width: 100%; /* Faz o botão de remover ocupar 100% */
+  }
+
+  /* --- Modal --- */
+  .modal-content {
+    /* Garante que o modal não cole nas bordas */
+    width: 95%;
+    padding: 1.5rem 1rem;
+  }
 }

@@ -1,3 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Reset básico para remover margens e paddings padrão */
+body, h1, h2, h3, p, figure, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f4f4f4; /* Um cinza claro de fundo para a página */
+}
+
+/* Remove decoração de link e cor padrão */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Garante que o app ocupe a altura total */
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
