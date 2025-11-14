@@ -1,5 +1,3 @@
-Claro! Vou transformar o conteúdo do PDF em um arquivo Markdown bem formatado para você:
-
 # Instruções de Execução do Projeto Mercado Digital (POC)
 
 Este guia detalha os passos necessários para configurar e rodar o projeto de prova de conceito (POC), incluindo o servidor backend (Node.js) e o cliente frontend (React).
