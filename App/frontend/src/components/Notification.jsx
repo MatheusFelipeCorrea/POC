@@ -25,9 +25,12 @@ function Notification({ message, type = 'error' }) {
     };
 
     return (
-        // A classe CSS baseada no 'type' já é dinâmica, o que é perfeito
-        <div className={`notification notification--${type}`}>
-            {renderIcon()} {/* 3. Renderiza o ícone dinâmico */}
+        // 3. ADICIONA O "role" (Acessibilidade e Teste)
+        <div
+            className={`notification notification--${type}`}
+            role="alert"
+        >
+            {renderIcon()} {/* Renderiza o ícone dinâmico */}
             <span className="notification__text">{message}</span>
         </div>
     );

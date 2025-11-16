@@ -1,4 +1,3 @@
-// App/backend/src/controllers/ProductController.js
 const connection = require('../database/connection'); // Importa a conexão
 
 // Define a URL base para as imagens (para não repetir)
@@ -43,7 +42,7 @@ module.exports = {
             console.error("Erro ao buscar produtos com variantes:", err);
             return res.status(500).json({ message: "Erro interno ao buscar produtos." });
         }
-    }, // <--- FIM DA FUNÇÃO INDEX (A CHAVE E VÍRGULA QUE FALTAVAM)
+    },
 
     /**
      * Busca um ÚNICO produto pelo ID e suas variantes
@@ -81,5 +80,5 @@ module.exports = {
             console.error("Erro ao buscar produto:", err);
             return res.status(500).json({ message: "Erro interno." });
         }
-    } // <--- FIM DA FUNÇÃO SHOW
+    }
 };

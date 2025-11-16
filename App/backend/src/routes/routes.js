@@ -1,7 +1,7 @@
 const express = require('express');
 const ProductController = require('../controllers/ProductController');
+
 // 1. IMPORTA A CONEXÃO DO BANCO DE DADOS
-// Este é o caminho CORRETO
 const db = require('../database/connection.js');
 
 const routes = express.Router();
@@ -10,7 +10,7 @@ const routes = express.Router();
 routes.get('/products', ProductController.index);
 routes.get('/products/:id', ProductController.show);
 
-// ===========================================
+
 // --- LÓGICA DO CARRINHO (Agora com DB) ---
 // ===========================================
 

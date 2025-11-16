@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// 1. Importar o hook de navegação
 import { useNavigate } from 'react-router-dom';
 import Carousel from '../components/Carousel';
 import ProductCard from '../components/ProductCard';
@@ -25,14 +24,14 @@ function HomePage() {
     const [smartphones, setSmartphones] = useState([]);
     const [essenciais, setEssenciais] = useState([]);
 
-    // --- LÓGICA DA BUSCA (NOVO) ---
+    // --- LÓGICA DA BUSCA---
     // 2. Adicionar o estado para o termo de busca
     const [searchQuery, setSearchQuery] = useState('');
     // 3. Inicializar o hook de navegação
     const navigate = useNavigate();
     // --- FIM DA LÓGICA DA BUSCA ---
 
-    // useEffect (já existente)
+
     useEffect(() => {
         const loadProducts = async () => {
             const allProducts = await fetchProducts(); // Busca tudo
@@ -48,7 +47,7 @@ function HomePage() {
             ));
         };
 
-        loadProducts(); // Roda a função
+        loadProducts();
     }, []); // O '[]' garante que rode só uma vez
 
     // 4. Adicionar a função de submit da busca
@@ -56,7 +55,6 @@ function HomePage() {
         e.preventDefault(); // Impede o recarregamento da página
         const query = searchQuery.trim();
         if (query) {
-            // Navega para a mesma página de busca do Header
             navigate(`/search?q=${query}`);
         }
     };

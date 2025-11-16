@@ -1,8 +1,7 @@
-// App/backend/src/database/connection.js
 const knex = require('knex');
-const config = require('./knexfile'); // Importa nosso knexfile
+const config = require('./knexfile'); // Importa o knexfile
 
-// Estamos usando apenas a configuração 'development'
+// Usando apenas a configuração 'development'
 const connection = knex(config.development);
 
 module.exports = connection;

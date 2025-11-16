@@ -2,13 +2,8 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-// App/backend/src/database/seeds/complex_products_variants.js
-
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.seed = async function (knex) {
+
   // Usamos uma transação para garantir que tudo seja inserido corretamente
   return knex.transaction(async (trx) => {
     // 1. Limpa as tabelas (Filho primeiro, depois Pai)
@@ -63,7 +58,7 @@ exports.seed = async function (knex) {
         .insert({
           base_name: 'Cerealmatinal KitKat',
           description: 'Pedaços crocantes com o sabor inconfundível do chocolate KitKat.',
-          variant_type: 'Tamanho', // Mesmo sendo um, ele precisa de uma variante
+          variant_type: 'Tamanho', //Por mais que ele seja apenas 1, ainda necessita de variante
         })
         .returning('id');
 
@@ -84,7 +79,7 @@ exports.seed = async function (knex) {
         .returning('id');
 
     // 3. Insere as Variantes "Filho" usando os IDs dos "Pais"
-    // (Eu mesmo gerei preços e caminhos de imagem, você PODE e DEVE alterar os caminhos)
+
 
     await trx('variants').insert([
       // -- iphone13 (use o ID do 'iphoneId') --

@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useMemo, useEffect } from 'react';
 
-// URL base da sua API
+// URL base da API
 const API_URL = 'http://localhost:3001';
 
 const CartContext = createContext();
@@ -24,9 +24,9 @@ export const CartProvider = ({ children }) => {
         loadCart();
     }, []); // O '[]' garante que rode só uma vez
 
-    // --- LÓGICA DE MANIPULAÇÃO (AGORA ASSÍNCRONA) ---
+    // --- LÓGICA DE MANIPULAÇÃO ---
 
-    // 2. ADICIONAR AO CARRINHO (agora fala com a API)
+    // 2. ADICIONAR AO CARRINHO
     const addToCart = async (variant, productBaseName, quantity) => {
         const response = await fetch(`${API_URL}/cart/add`, {
             method: 'POST',
@@ -45,7 +45,7 @@ export const CartProvider = ({ children }) => {
         setCartItems(data.cartItems);
     };
 
-    // 3. ATUALIZAR QUANTIDADE (agora fala com a API)
+    // 3. ATUALIZAR QUANTIDADE
     const updateQuantity = async (variantId, newQuantity) => {
         const response = await fetch(`${API_URL}/cart/update/${variantId}`, {
             method: 'PUT',
@@ -62,7 +62,7 @@ export const CartProvider = ({ children }) => {
         setCartItems(data.cartItems);
     };
 
-    // 4. REMOVER DO CARRINHO (agora fala com a API)
+    // 4. REMOVER DO CARRINHO
     const removeFromCart = async (variantId) => {
         const response = await fetch(`${API_URL}/cart/remove/${variantId}`, {
             method: 'DELETE'
@@ -77,8 +77,8 @@ export const CartProvider = ({ children }) => {
         setCartItems(data.cartItems);
     };
 
-    // 5. CHECKOUT (agora fala com a API)
-    // Renomeei 'clearCart' para 'checkout' para ficar mais claro
+    // 5. CHECKOUT
+
     const checkout = async () => {
         const response = await fetch(`${API_URL}/checkout`, {
             method: 'POST'
@@ -95,7 +95,7 @@ export const CartProvider = ({ children }) => {
         return data.message; // Retorna "Compra concluída com sucesso!"
     };
 
-    // --- CÁLCULOS (Permanecem iguais) ---
+    // --- CÁLCULOS  ---
     const totalItems = useMemo(() => {
         return cartItems.reduce((sum, item) => sum + item.quantity, 0);
     }, [cartItems]);
@@ -110,7 +110,7 @@ export const CartProvider = ({ children }) => {
         addToCart,
         updateQuantity,
         removeFromCart,
-        checkout, // Trocamos clearCart por checkout
+        checkout,
         totalItems,
         subtotal
     };

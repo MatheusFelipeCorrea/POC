@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Para o botão "Ver mais"
+import { Link } from 'react-router-dom';
 
 // Função helper para formatar o preço para R$
 const formatPrice = (price) => {

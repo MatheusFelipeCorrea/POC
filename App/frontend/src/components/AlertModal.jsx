@@ -1,5 +1,5 @@
 import React from 'react';
-// Importa os ícones que vamos usar
+// Importa os ícones
 import { AlertTriangle, CheckCircle } from 'lucide-react';
 
 /**

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Para os links de navegação
 import { ShoppingCart, User } from 'lucide-react'; // Ícones
-// IMPORTANTE: Mude 'logo.png' para o nome exato da sua logo em assets!
 import logo from '../assets/Mercado Digital.png';
 
 function Header() {

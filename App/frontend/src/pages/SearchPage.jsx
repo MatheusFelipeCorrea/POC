@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-// 1. Importa o Link para o botão
 import { useSearchParams, Link } from 'react-router-dom';
 
 import { fetchProducts } from '../services/api.js';
 
-// 2. CORREÇÃO: Removendo extensões '.jsx' para evitar erro
+
 import ProductCard from '../components/ProductCard';
 import Notification from '../components/Notification';
 
@@ -74,7 +73,7 @@ function SearchPage() {
                 </div>
             )}
 
-            {/* 3. BOTÃO "VOLTAR" ADICIONADO AQUI */}
+            {/* 3. BOTÃO "VOLTAR" */}
             {/* Aparece se não estiver carregando E não tiver resultados */}
             {!isLoading && searchResults.length === 0 && (
                 <div className="search-empty-fallback" style={{ marginTop: '20px', textAlign: 'center' }}>

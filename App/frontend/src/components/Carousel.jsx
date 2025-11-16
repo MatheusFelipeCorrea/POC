@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-// Importa suas 3 imagens de slide (completas)
+// Importa as 3 imagens de slide (completas)
 import slide1Img from '../assets/Carousel 1.png';
 import slide2Img from '../assets/Carousel 2.png';
 import slide3Img from '../assets/Carousel 3.png';
 
-// Nossos dados agora são apenas a lista de imagens
+// Os dados agora são apenas a lista de imagens
 const slides = [slide1Img, slide2Img, slide3Img];
 
 function Carousel() {
@@ -46,8 +46,7 @@ function Carousel() {
                         // Define a imagem de fundo do slide
                         style={{ backgroundImage: `url(${imgSrc})` }}
                     >
-                        {/* Não precisamos de mais nada aqui dentro,
-                pois o conteúdo (texto, oferta) está na imagem. */}
+
                     </div>
                 ))}
             </div>

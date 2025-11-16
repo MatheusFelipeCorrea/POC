@@ -13,12 +13,12 @@ const formatPrice = (price) => {
 };
 
 function CartPage() {
-    // 1. PEGA AS NOVAS FUNÇÕES ASYNC DO CONTEXTO
+    // 1. PEGA AS FUNÇÕES ASYNC DO CONTEXTO
     const {
         cartItems,
         updateQuantity,
         removeFromCart,
-        checkout, // <-- Nova função de checkout
+        checkout,
         totalItems,
         subtotal
     } = useCart();
@@ -27,23 +27,23 @@ function CartPage() {
     const [toast, setToast] = useState(null);
     const [modal, setModal] = useState(null);
 
-    // 3. useEffect para o "Carrinho Vazio" (agora é um toast)
+    // 3. useEffect para o "Carrinho Vazio"
     useEffect(() => {
-        // Se o carrinho ficar vazio E não houver outro toast ativo...
+        // Se o carrinho ficar vazio
         if (cartItems.length === 0 && !toast) {
             setToast({
                 message: "Seu carrinho está vazio",
                 type: "warning"
             });
         }
-        // Se houver itens e o toast for o de "carrinho vazio", limpa ele
+        // Se houver itens
         else if (cartItems.length > 0 && toast && toast.type === 'warning') {
             setToast(null);
         }
     }, [cartItems.length, toast]);
 
 
-    // --- 4. NOVAS FUNÇÕES ASYNC PARA CHAMAR OS POPUPS ---
+    // --- 4. FUNÇÕES ASYNC PARA CHAMAR OS POPUPS ---
 
     const handleRemoveItem = async (id) => {
         try {
@@ -58,7 +58,7 @@ function CartPage() {
     const handleUpdateItem = async (item, newQuantity) => {
         try {
             await updateQuantity(item.id, newQuantity);
-            // Sucesso (não precisa mostrar popup, o número só atualiza)
+            // Sucesso
         } catch (error) {
             // ERRO (ex: "Limite Excedido")
             setModal({ message: error.message, type: "warning" });
@@ -72,7 +72,7 @@ function CartPage() {
 
             // SUCESSO: Mostra o modal verde
             setModal({ message: successMessage, type: "success" });
-            setToast(null); // Limpa o toast de "carrinho vazio"
+            setToast(null); // Limpa o "carrinho vazio"
 
         } catch (error) {
             // ERRO (ex: "API de checkout falhou")
@@ -125,7 +125,7 @@ function CartPage() {
                                         <p className="cart-item__variant">{item.baseName.includes('Trident') ? 'Sabor' : 'Cor'}: {item.name}</p>
 
                                         <div className="cart-item__actions">
-                                            {/* 6. Botões atualizados para as novas funções */}
+                                            {/* 6. Botões para as funções */}
                                             <div className="cart-item__quantity">
                                                 <button onClick={() => handleUpdateItem(item, item.quantity - 1)}>-</button>
                                                 <input type="text" value={item.quantity} readOnly />
@@ -164,7 +164,7 @@ function CartPage() {
                             <p>Rua das Primaveras, 123, Jardim das Flores, Vila Nova, SP, 12345-678</p>
                         </div>
 
-                        {/* 7. Botão "Fechar Pedido" usa a nova função */}
+                        {/* 7. Botão "Fechar Pedido" usa a função */}
                         <button className="cart-summary__checkout-btn" onClick={handleCheckout}>
                             Fechar Pedido
                         </button>

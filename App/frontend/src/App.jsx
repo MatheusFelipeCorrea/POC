@@ -8,10 +8,9 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import DetailsPage from './pages/DetailsPage';
 import CartPage from './pages/CartPage';
-// 1. IMPORTANDO A NOVA PÁGINA DE BUSCA
 import SearchPage from './pages/SearchPage';
 
-// Importa o Provider
+
 import { CartProvider } from './context/CartContext';
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/product/:id" element={<DetailsPage />} />
                         <Route path="/cart" element={<CartPage />} />
-                        {/* 2. ADICIONANDO A NOVA ROTA DE BUSCA */}
                         <Route path="/search" element={<SearchPage />} />
                     </Routes>
                 </main>

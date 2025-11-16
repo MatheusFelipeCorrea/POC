@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchProductById } from '../services/api';
 import { useCart } from '../context/CartContext';
-// Importamos os DOIS tipos de popup
 import Notification from '../components/Notification';
-import AlertModal from '../components/AlertModal'; // <-- PRECISAMOS DO MODAL AQUI
+import AlertModal from '../components/AlertModal';
 
 // ... (formatPrice) ...
 const formatPrice = (price) => {
@@ -16,7 +15,7 @@ const formatPrice = (price) => {
 
 function ProductDetailsPage() {
     const { id } = useParams();
-    const { addToCart } = useCart(); // Pegamos o novo addToCart (async)
+    const { addToCart } = useCart();
 
     const [product, setProduct] = useState(null);
     const [selectedVariant, setSelectedVariant] = useState(null);
@@ -24,8 +23,8 @@ function ProductDetailsPage() {
 
     // Estados para os popups
     const [toast, setToast] = useState(null);
-    const [modal, setModal] = useState(null); // Para erros (ex: Limite)
-    const [isAdding, setIsAdding] = useState(false); // Para desabilitar o botão
+    const [modal, setModal] = useState(null);
+    const [isAdding, setIsAdding] = useState(false);
 
     // ... (useEffect loadProduct) ...
     useEffect(() => {
@@ -39,7 +38,7 @@ function ProductDetailsPage() {
         loadProduct();
     }, [id]);
 
-    // 1. ATUALIZA O 'handleAddToCart' PARA SER ASYNC E USAR TRY/CATCH
+
     const handleAddToCart = async () => {
         setIsAdding(true); // Desabilita o botão
         setToast(null);
@@ -64,11 +63,11 @@ function ProductDetailsPage() {
         }
     };
 
-    // ... (if !product) ...
+
     if (!product || !selectedVariant) {
         return <div className="details-page-container">Carregando...</div>;
     }
-    // ... (quantityOptions) ...
+
     const quantityOptions = Array.from({ length: 10 }, (_, i) => i + 1);
 
     return (
@@ -157,7 +156,7 @@ function ProductDetailsPage() {
                             <p>Rua das Primaveras, 123, Jardim das Flores, Vila Nova, SP, 12345-678</p>
                         </div>
 
-                        {/* 3. BOTÃO ATUALIZADO (desabilitado enquanto carrega) */}
+                        {/* 3. Botão desabilitado enquanto carrega */}
                         <button
                             className="buy-box__add-btn"
                             onClick={handleAddToCart}
