@@ -1,4 +1,4 @@
-/* Reset básico para remover margens e paddings padrão */
+/* Reset básico para remover margens e paddings padrão. */
 body, h1, h2, h3, p, figure, ul {
     margin: 0;
     padding: 0;
