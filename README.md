@@ -15,11 +15,11 @@ O foco deste projeto é a integração entre o Frontend e o Backend, garantindo 
 
 ## 📝 Documentação e Endpoints
 
-Toda a documentação técnica da API (estrutura de dados, endpoints e validações) está detalhada no arquivo:
+Toda a documentação técnica da API (estrutura de dados, endpoints e validações), como rodar o projeto e os wireframes estão nos arquivos abaixo:
 
-* **[Documentação da API](API_Documentation.md)**
-* **[Como Rodar o Projeto](API_Documentation.md)**
-* **[Wireframes](API_Documentation.md)**
+* **[Documentação da API](https://github.com/MatheusFelipeCorrea/POC/tree/main/Documents/Documenta%C3%A7%C3%A3o%20API)**
+* **[Como Rodar o Projeto](https://github.com/MatheusFelipeCorrea/POC/blob/main/Documents/Rodando%20o%20Projeto/README.MD)**
+* **[Wireframes](https://github.com/MatheusFelipeCorrea/POC/tree/main/Documents/Wireframes)**
 
 ---
 
