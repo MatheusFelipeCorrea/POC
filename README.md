@@ -4,7 +4,7 @@ Este repositório contém  um sistema de e-commerce básico, demonstrando a arqu
 
 O foco deste projeto é a integração entre o Frontend e o Backend, garantindo a persistência dos dados do carrinho de compras.
 
-## ✨ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 | Camada | Tecnologia | Detalhes |
 | :--- | :--- | :--- |
