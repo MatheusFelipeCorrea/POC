@@ -1,4 +1,4 @@
-# 🛒 Prova de Conceito (POC) - Mercado Digital
+# Mercado Digital
 
 Este repositório contém  um sistema de e-commerce básico, demonstrando a arquitetura completa de uma aplicação web Full Stack (MERN Stack sem Mongo).
 
