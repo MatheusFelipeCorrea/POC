@@ -12,7 +12,7 @@ O foco deste projeto é a integração entre o Frontend e o Backend, garantindo 
 | **Backend** | Node.js (Express) | Servidor de API RESTful. |
 | **Persistência** | SQLite e Knex.js | Banco de dados local para persistência dos dados do carrinho. |
 | **Testes** | Jest, Supertest, Vitest, RTL | Testes de integração da API (backend) e testes unitários de componentes (frontend). |
-| **Estilização** | CSS Puro | Estilização responsiva e componentizada (anteriormente Tailwind CSS). |
+| **Estilização** | CSS Puro | Estilização responsiva e componentizada. |
 
 ## 📝 Documentação e Endpoints
 
