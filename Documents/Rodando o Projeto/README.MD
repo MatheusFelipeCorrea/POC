@@ -1,4 +1,3 @@
-Claro! Vou transformar o conteúdo do PDF em um arquivo Markdown bem formatado para você:
 
 # Instruções de Execução do Projeto Mercado Digital (POC)
 
